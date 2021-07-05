@@ -3,11 +3,12 @@ from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 from .models import Question, Choice
-
+from django.contrib.auth.views import LoginView
 
 # def index (request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -18,6 +19,14 @@ from .models import Question, Choice
 #     }
 
     # return render(request, 'polls/index.html', context)
+
+class CustomLoginView(LoginView):
+    template_name = 'polls/login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('polls:index')
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -59,13 +68,14 @@ def vote(request, question_id):
   
         return HttpResponseRedirect(reverse('polls:index'))
 
-class QuestionCreate(CreateView):
+class QuestionCreate(LoginRequiredMixin, CreateView):
     model = Question
     fields = '__all__' 
     success_url = reverse_lazy('polls:index')
     template_name = 'polls/questioncreate.html' 
+    context_object_name = 'question'
 
-class QuestionDelete(DeleteView):
+class QuestionDelete(LoginRequiredMixin, DeleteView):
     model = Question
     template_name = 'polls/questiondelete.html'
     context_object_name = 'question'
@@ -74,7 +84,7 @@ class QuestionDelete(DeleteView):
        
         return super().delete(*args, **kwargs)
 
-class AddChoice(CreateView):
+class AddChoice(LoginRequiredMixin, CreateView):
     model = Choice
     fields = ['choice_text', 'question']
     template_name = 'polls/choiceadd.html'

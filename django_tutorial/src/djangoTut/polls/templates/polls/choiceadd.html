@@ -1,7 +1,18 @@
-<div class="card-body">
+{% extends 'polls/base.html' %} {% block content %}
+
+<div class="header-bar">
+    <h1> Add a choice to the poll </h1>
+</div>
+
+<div class="quest-wrapper">
     <form method="POST" action="">
         {% csrf_token %}
-        {{form.as_p}}
+        <div id = 'quest'>{{form.as_p}} </div>
+        <p>
         <input class="button" type="submit" value="Submit">
     </form>
 </div>
+
+<a href="{% url 'polls:index' %}" style='font-size:60px;'>&#8617;</a>
+
+{% endblock content %}

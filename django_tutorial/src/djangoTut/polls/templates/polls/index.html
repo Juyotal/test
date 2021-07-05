@@ -3,19 +3,24 @@
 
 <div class="header-bar">
 
-        <h1>Welcome to out little poll</h1>
-        <P></P>
-        <h3> please click the bellow questions to answer them. </h3>
-    
+        <h1>Available Polls</h1>
+        <!-- <P></P>
+        <h3> please click the bellow questions to answer them. </h3> -->
+
 </div>
     
 <div id="questionlist" class="quest-wrapper">
     <ol>
     {% for question in latest_question_list %}
-    <div id="quest"><li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li></div>
+    <div id="quest"> <b><li>{{ question.question_text }}</li></b>
         
-        <a class="delete" href="{% url 'polls:questiondel' pk=question.pk %}"> &#215;</a>
-        
+        <!-- <a class="delete" href="{% url 'polls:questiondel' pk=question.pk %}"> &#215;</a> -->
+
+        <span class ='button_a'>
+            <a id = 'button' href="{% url 'polls:detail' question.id %}" class="btn ">Vote</a> &nbsp;
+            <a id = 'button' href="{% url 'polls:results' question.id %}" class="btn_a">View Results</a> &nbsp;
+        </span>
+    </div>
     
     {% endfor %}
     </ol>
@@ -30,7 +35,5 @@
 <h3><a href="{%url 'polls:bonus' %}"> go to polls result. </a> </h3> 
 
 
-
-<h3><a href="{%url 'polls:questioncreate' %}"> add a question </a> </h3>
 
 {% endblock content %}

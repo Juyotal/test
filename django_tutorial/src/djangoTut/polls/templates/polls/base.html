@@ -6,46 +6,45 @@
     <title>Strange Survey </title>
     <style>
         body {
-          background-color: rgb(66, 62, 66);
+          background-color: rgb(245, 243, 245);
           font-family: "courier new", monospace;
-          padding-top: 50px;
+          padding-top: 0px;
         }
 
         .container {
-        max-width: 1500px;
-        
+        max-width: 1000px;
+        padding-top: 20px;
         margin: auto;
         background-color: rgb(237, 243, 245);
         -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
         box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
         padding-bottom: 50px;
+        border-radius: 10px;
         }
 
         .header-bar {
-        display: flex;
+        /* display: flex; */
         justify-content: space-between;
         color: rgb(24, 16, 16);
         padding: 10px;
         border-radius: 5px 5px 0 0;
-        background: linear-gradient(
-          90deg,
-          #778872 0%,
-          #56a369 43%,
-          #69cace 100%
-        );
+        background:wheat;
       }
 
       #quest {
         background-color: #cacaac;
         color: rgb(34, 22, 22);
         font-size: 25px;
-        border: #ced6e0 1px solid;
+        border: #121314 1px solid;
         padding-left: 10px;
         border-radius: 10px;
-
-
+        padding-bottom: 5px;
       }
-
+      input[type = radio]{
+        border: 5px;
+        width: 2em;
+        height: 2em;
+      }
       #answers {
         
         text-transform: capitalize;
@@ -55,12 +54,13 @@
         }
 
       .quest-wrapper {
-        display: flex;
-        align-items: center;
+        /* display: flex; */
+        align-items: center; 
         justify-content: space-between;
-        background-color: #fff;
-        border-top: 1px solid #dfe4ea;
+        background-color: rgb(241, 226, 226);
+        border-top: 1px solid #121314;
         overflow: hidden;
+        
       }
 
       .delete {
@@ -86,19 +86,92 @@
       }
 
       #button {
+      float: right;
       background-color: #4CAF50;
       border-radius: 10px;
       color: white;
-      padding: 15px 32px;
+      padding: 5px 5px;
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 16px;
-}
+      font-size: 20px;
+      }
+      .btn_a{
+        background-color: blue;
+
+      }
+      /* .buttona{
+        line-height: 50px;
+        
+        position: relative;;
+        padding: 10px;
+      } */
+
+     
+
+      nav{ 
+        background-color: rgb(223, 185, 154);
+        height: 80px;
+        width: 100%;
+        font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      }
+
+      label.logo{
+        color: rgb(31, 27, 27);
+        font-size: 35px;
+        line-height: 80px;
+        padding: 0 100px;
+        font-weight: bold;
+      }
+
+      nav ul{
+        float: right;
+        margin-right: 20px;
+        
+      }
+
+      nav ul li{
+        display: inline-block;
+        line-height: 80px;
+        margin: 0 5px;
+      }
+
+      b li{
+        line-height: 50px;
+        padding-top: 20px;
+      }
+
+      nav ul li a{
+        color: rgb(26, 19, 19);
+        font-size: 20px;
+        text-transform: uppercase;
+      }
+
+      input[type=submit] {
+        width: 5em;  
+        height: 5em;
+        font-size: 15px;
+    
+      }
+
     </style>
   </head>
 
   <body>
+    <nav>
+      <label class = 'logo'> Poll Application </label>
+      <ul>
+        <li> <a href = "{%url 'polls:index' %}"> Home </a></li>
+        {% if request.user.is_authenticated %}
+        <li> <a href = "{%url 'polls:logout' %}"> logout </a></li>
+        <li> <a href = "{%url 'polls:questioncreate' %}"> create </a></li>
+        {% else %}
+        <li> <a href = "{%url 'polls:login' %}"> login </a></li>
+        {%endif%}
+      </ul>
+      
+    </nav>
+
     <div class="container">{% block content %} {% endblock content %}</div>
   </body>
 </html>
