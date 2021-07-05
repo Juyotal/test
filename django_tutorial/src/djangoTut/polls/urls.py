@@ -8,5 +8,8 @@ urlpatterns = [
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
     path('<int:question_id>/vote/', views.vote, name='vote'),
-    path('bonus', views.BonusView.as_view(), name='bonus')
+    path('bonus/', views.BonusView.as_view(), name='bonus'),
+    path('create-question/',views.QuestionCreate.as_view(), name = 'questioncreate'),
+    path('<int:pk>/delete-question/',views.QuestionDelete.as_view(), name = 'questiondel'),
+    path('<int:pk>/add-choice/',views.AddChoice.as_view(), name = 'choiceadd'),
 ]

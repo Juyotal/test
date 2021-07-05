@@ -1,4 +1,10 @@
-<h1>{{ question.question_text }}</h1>
+{% extends 'polls/base.html' %} {% block content %}
+
+<a id="add-link" href="{% url 'polls:choiceadd' pk=question.pk %}">&#x2b;</a>
+
+<div id='quest' > 
+    <h2>{{ question.question_text }}</h2>
+</div>
 
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
@@ -8,8 +14,15 @@
 {% csrf_token %}
 
 {% for choice in question.choice_set.all %}
+<div id="choices-wrapper">
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-{% endfor %}
-<input type="submit" value="Vote">
+</div>
+{% endfor %} 
+<p> </p>
+<input id = "button" type="submit" value="Vote">
 </form>
+
+
+
+{% endblock content %}

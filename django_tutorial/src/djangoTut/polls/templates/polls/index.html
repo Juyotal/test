@@ -1,14 +1,25 @@
+{% extends 'polls/base.html' %} {% block content %}
 {% if latest_question_list %}
-    <ul>
-  
 
+<div class="header-bar">
+
+        <h1>Welcome to out little poll</h1>
+        <P></P>
+        <h3> please click the bellow questions to answer them. </h3>
+    
+</div>
+    
+<div id="questionlist" class="quest-wrapper">
+    <ol>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    <div id="quest"><li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li></div>
+        
+        <a class="delete" href="{% url 'polls:questiondel' pk=question.pk %}"> &#215;</a>
+        
     
     {% endfor %}
-   
-    </ul>
-
+    </ol>
+</div>
 
 
 
@@ -16,5 +27,10 @@
     <p>No polls are available.</p>
 {% endif %}
 
-<h3><a href="{%url 'polls:bonus' %}"> go to bonus page </a> <h3>
+<h3><a href="{%url 'polls:bonus' %}"> go to polls result. </a> </h3> 
 
+
+
+<h3><a href="{%url 'polls:questioncreate' %}"> add a question </a> </h3>
+
+{% endblock content %}

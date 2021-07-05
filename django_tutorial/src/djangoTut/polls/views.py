@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.urls.base import reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView, DeleteView
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 
@@ -23,7 +25,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.order_by('-pub_date')[:10]
 
 class DetailView(generic.DetailView):
     model = Question
@@ -55,4 +57,30 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
   
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:index'))
+
+class QuestionCreate(CreateView):
+    model = Question
+    fields = '__all__' 
+    success_url = reverse_lazy('polls:index')
+    template_name = 'polls/questioncreate.html' 
+
+class QuestionDelete(DeleteView):
+    model = Question
+    template_name = 'polls/questiondelete.html'
+    context_object_name = 'question'
+    success_url = reverse_lazy('polls:index')
+    def delete(self, *args, **kwargs):
+       
+        return super().delete(*args, **kwargs)
+
+class AddChoice(CreateView):
+    model = Choice
+    fields = ['choice_text', 'question']
+    template_name = 'polls/choiceadd.html'
+    success_url = reverse_lazy('polls:index')
+
+    
+
+    
+    
